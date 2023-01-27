@@ -8,5 +8,13 @@ export default defineConfig({
     jsxInject: `import React from 'react'`,
     
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        nested: resolve(__dirname, 'nested/index.html'),
+      },
+    },
+  },
   define: {global: 'window'}
 });
