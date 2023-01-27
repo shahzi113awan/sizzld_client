@@ -1,0 +1,39 @@
+@font-face {
+  font-family: Poppins;
+  src: url("./FontFamily/Poppins-Regular.ttf");
+}
+*{
+  margin: 0;
+  padding: 0;
+}
+
+
+.css-qvzsud-MuiCardContent-root:last-child{
+  padding-bottom: 0px !important;
+}
+.slick-slider{
+  padding: 0px 20px;
+}
+.detailImg{
+  height: 267px;
+  width: 305px;
+}
+@media(max-width:1400px) {
+.detailImg{
+  height: 209px;
+  width: 258px
+} 
+}
+@media(max-width:600px) {
+  .detailImg{
+    height: 146px;
+    width: 143px;
+  } 
+  }
+  .networkImg{
+    height:50px;
+    width:50px;
+  }
+  .favouriteImg{
+    width: 50%;
+  }
