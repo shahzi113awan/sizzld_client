@@ -6,6 +6,7 @@ import {
   OutlinedInput,
   RadioGroup,
   Typography,
+  Snackbar
 } from "@mui/material";
 import img from "../assets/background.png";
 import img2 from "../assets/backgroundSign.png";
@@ -34,13 +35,24 @@ const Signin = () => {
     email: "",
     password: "",
   });
+  const [open, setOpen] = useState(false)
   const navigate = useNavigate();
   const [address, setAddress] = useState('')
   const handleSocialLogin = (user, err) => {
-    console.log(user);
-    navigate('/')
-    console.log(err);
-    localStorage.setItem('auth', true)
+
+    try{
+      localStorage.setItem('auth', true)
+      navigate('/')
+    }
+    catch(err){
+      console.log(err);
+    }
+    
+    // console.log(user);
+
+    // navigate('/')
+    // console.log(err);
+    // localStorage.setItem('auth', true)
   };
 
   const handleSocialLoginFailure = (err) => {
@@ -50,11 +62,13 @@ const Signin = () => {
   const handleLogin = () => {
   
     ApiServices.post(url.login, input).then((res) => {
-      console.log(res);
-      localStorage.setItem('auth', true)
+      console.log(res)
+      localStorage.setItem('auth', true);
+      localStorage.setItem('uid',res?.data?.data?.user?._id);
       navigate('/')
 
     }).catch((err) => {
+      alert('Invalid username or password')
       console.log(err);
     })
 
@@ -101,7 +115,7 @@ const handleInput = (e) => {
     <Box
       sx={{
         backgroundImage: `url(${img})`,
-        height: "100vh",
+        minHeight: "100vh",
         width: "100%",
         backgroundPosition: "center",
         backgroundSize: "cover",
@@ -110,13 +124,23 @@ const handleInput = (e) => {
         alignItems: "center",
       }}
     >
+        <Snackbar
+        anchorOrigin={{ vertical:"top" , horizontal:"right" }}
+        open={open}
+        
+        message="I love snacks"
+        key={"top" + "right"}
+      />
        
       <Box
         sx={{
           backgroundImage: `url(${img2})`,
-          width: "30%",
-          height: "700px",
+          width: { xs: "100%", sm: "100%", md: "70%", lg: "30%" },
+         
           borderRadius: "7px",
+          height:'auto',
+          margin:'auto',
+          padding:'20px',
           //   background:'linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8))',
           mixBlendMode: "normal",
           backgroundPosition: "center",
@@ -134,7 +158,7 @@ const handleInput = (e) => {
             <Typography
               sx={{
                 fontWeight: 700,
-                fontSize: "30px",
+                fontSize: { xs: "16px", sm: "18px", md: "30px", lg: "30px" },
                 color: "#ffffff",
                 textShadow: "1px 2px 4px rgba(175, 175, 175, 0.18)",
                 textAlign: "center",
@@ -145,7 +169,8 @@ const handleInput = (e) => {
             <Typography
               sx={{
                 fontWeight: 700,
-                fontSize: "30px",
+                fontSize: { xs: "16px", sm: "18px", md: "30px", lg: "30px" },
+
                 color: "#ffffff",
                 textShadow: "1px 2px 4px rgba(175, 175, 175, 0.18)",
                 textAlign: "center",
@@ -169,7 +194,7 @@ const handleInput = (e) => {
                 }}
               >
                 <OutlinedInput
-                onClick={(e)=>{handleInput(e)}}
+                onChange={(e)=>{handleInput(e)}}
                 name="email"
                   sx={{
                     border: "3px solid #7617EA",
@@ -181,8 +206,10 @@ const handleInput = (e) => {
                   placeholder="Enter user name"
                 ></OutlinedInput>
                 <OutlinedInput
-                onClick={(e)=>{handleInput(e)}}
+                onChange={(e)=>{handleInput(e)}}
                 name="password"
+                type="password"
+
                   sx={{
                     border: "3px solid #7617EA",
                     backdropFilter: " blur(10px)",
@@ -202,7 +229,9 @@ const handleInput = (e) => {
               // value={value}
               // onChange={handleChange}
               >
-                <Typography sx={{ color: '#ffffff', fontSize: '14px', fontWeight: '300', ml: '60%', }}>Forgot Password?</Typography>
+                <Typography sx={{ color: '#ffffff', 
+                fontSize:{xs:'12px',sm:'12px',md:'14px',lg:'14px'} ,
+                fontWeight: '300', ml: '60%', }}>Forgot Password?</Typography>
 
               </RadioGroup>
               {/* button group box */}
@@ -233,7 +262,7 @@ const handleInput = (e) => {
                   >
                     <Typography
                       sx={{
-                        marginLeft: '10px'
+                        marginLeft: '12px'
                       }}
                     >Login</Typography>
 
@@ -267,7 +296,11 @@ const handleInput = (e) => {
                       width: "100%",
                     }}
                   >
-                    <Typography>Sign up</Typography>
+                    <Typography 
+                    sx={{
+                      marginLeft: '10px'
+                    }}
+                    >Sign up</Typography>
 
                     <Avatar sx={{ background: "rgba(255, 255, 255, 0.2)" }}>
                       <ArrowForwardIcon
