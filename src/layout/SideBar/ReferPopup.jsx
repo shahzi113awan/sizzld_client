@@ -39,14 +39,13 @@ export default function BasicModal({ handleOpen, handleClose, open }) {
   useEffect(() => {
     if (uid) {
       ApiServices.get(url.getCode + uid).then((res) => {
-
-        setCopy(window.location.host+'/signup/'+res?.data?.data?.referralCode)
+        setCopy(res?.data?.data?.referralLink)
       })
     }
   }, [
     uid
   ]);
- 
+
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
