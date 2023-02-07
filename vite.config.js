@@ -9,10 +9,12 @@ export default defineConfig({
   },
  
   build: {
-    // outDir: "../server/dist",
+    outDir: "../server/dist",
     
     
   },
+  
+ 
 
   define: {global: 'window'}
 });
